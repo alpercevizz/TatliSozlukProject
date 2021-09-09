@@ -15,6 +15,7 @@ namespace TatliSozlukProject.Controllers
         MessageManager mm = new MessageManager(new EfMessageDal());
         ContactValidator contactValidator = new ContactValidator();
 
+        
         public ActionResult Index()
         {
             var contactValues = contactManager.GetContactList();
@@ -29,13 +30,14 @@ namespace TatliSozlukProject.Controllers
 
         public PartialViewResult MessageSidebar()
         {
+            string userSession = (string)Session["AuthorMail"];
             var contactNum = contactManager.GetContactList();
             ViewBag.num = contactNum.Count();
 
-            var inboxNum = mm.GetMessageListInbox();
+            var inboxNum = mm.GetMessageListInbox(userSession);
             ViewBag.value1 = inboxNum.Count();
 
-            var sendboxNum = mm.GetMessageListSendbox();
+            var sendboxNum = mm.GetMessageListSendbox(userSession);
             ViewBag.value2 = sendboxNum.Count();
 
             var draftsNum = mm.GetMessageListDrafts();

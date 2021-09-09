@@ -17,15 +17,15 @@ namespace TatliSozlukProject.Controllers
         MessageValidator msjValid = new MessageValidator();
 
         [Authorize]
-        public ActionResult Inbox()
+        public ActionResult Inbox(string p)
         {
-            var messageValue = mm.GetMessageListInbox();
+            var messageValue = mm.GetMessageListInbox(p);
             return View(messageValue);
         }
 
-        public ActionResult Sendbox()
+        public ActionResult Sendbox(string mail)
         {
-            var mesValue = mm.GetMessageListSendbox();
+            var mesValue = mm.GetMessageListSendbox(mail);
             return View(mesValue);
         }
 

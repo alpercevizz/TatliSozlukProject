@@ -31,15 +31,15 @@ namespace BusinessLayer.Concrete
             return _messageDal.List(x => x.MessageStatus == "Taslak");
         }
 
-        public List<Message> GetMessageListInbox()
+        public List<Message> GetMessageListInbox(string mail)
         {
-            return _messageDal.List(x=>x.ReceiverMail == "admin@gmail.com");
+            return _messageDal.List(x=>x.ReceiverMail == mail);
         }
 
 
-        public List<Message> GetMessageListSendbox()
+        public List<Message> GetMessageListSendbox(string mail)
         {
-            return _messageDal.List(x => x.SenderMail == "admin@gmail.com");
+            return _messageDal.List(x => x.SenderMail == mail);
         }
 
         public List<Message> GetMessageListTrash()

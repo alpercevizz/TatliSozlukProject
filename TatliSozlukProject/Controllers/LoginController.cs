@@ -1,4 +1,6 @@
-﻿using DataAccessLayer.Concrete;
+﻿using BusinessLayer.Concrete;
+using DataAccessLayer.Concrete;
+using DataAccessLayer.EntityFramework;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -9,8 +11,11 @@ using System.Web.Security;
 
 namespace TatliSozlukProject.Controllers
 {
+    [AllowAnonymous]
     public class LoginController : Controller
     {
+        AuthorLoginManager alm = new AuthorLoginManager(new EfAuthorDal());
+
         [HttpGet]
         public ActionResult Index()
         {
@@ -36,6 +41,40 @@ namespace TatliSozlukProject.Controllers
                 return RedirectToAction("Index");
             }
             
+        }
+
+        [HttpGet]
+        public ActionResult AuthorLogin()
+        {
+            return View();
+        }
+
+       [HttpPost]
+        public ActionResult AuthorLogin(Author author)
+        {
+            Context c = new Context();
+            //var authorUserInfo = c.Authors.FirstOrDefault(x => x.AuthorMail == author.AuthorMail && x.AuthorPassword == author.AuthorPassword);
+            var authorUserInfo = alm.GetAuthor(author.AuthorMail,author.AuthorPassword);
+            if (authorUserInfo != null)
+            {
+                FormsAuthentication.SetAuthCookie(authorUserInfo.AuthorMail, false);
+                Session["AuthorMail"] = authorUserInfo.AuthorMail;
+                return RedirectToAction("MyContent", "AuthorPanelContent");
+            }
+
+            else
+            {
+                return RedirectToAction("AuthorLogin");
+            }
+           
+            
+        }
+
+        public ActionResult LogOut()
+        {
+            FormsAuthentication.SignOut();
+            Session.Abandon();
+            return RedirectToAction("Headings", "Default");
         }
     }
 }

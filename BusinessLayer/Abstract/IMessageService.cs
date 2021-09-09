@@ -9,8 +9,8 @@ namespace BusinessLayer.Abstract
 {
     public interface IMessageService
     {
-        List<Message> GetMessageListInbox();
-        List<Message> GetMessageListSendbox();
+        List<Message> GetMessageListInbox(string mail);
+        List<Message> GetMessageListSendbox(string mail);
         List<Message> GetMessageListDrafts();
         List<Message> GetMessageListTrash();
         void AddMessage(Message message);

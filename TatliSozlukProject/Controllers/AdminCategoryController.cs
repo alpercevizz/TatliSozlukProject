@@ -16,7 +16,7 @@ namespace TatliSozlukProject.Controllers
         CategoryManager cm = new CategoryManager(new EfCategoryDal());
         // GET: AdminCategory
 
-        [Authorize]
+        [Authorize(Roles = "B")] // sadece B rolündeki kişiler bu sayfayı görsün.
         public ActionResult Index()
         {
             var categoryList = cm.GetCatList();

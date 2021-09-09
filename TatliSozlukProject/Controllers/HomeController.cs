@@ -31,5 +31,11 @@ namespace TatliSozlukProject.Controllers
         {
             return View();
         }
+
+        [AllowAnonymous]
+        public ActionResult Homepage()
+        {
+            return View();
+        }
     }
 }

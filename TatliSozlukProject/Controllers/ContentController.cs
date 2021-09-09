@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.Concrete;
+using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,12 @@ namespace TatliSozlukProject.Controllers
             return View();
         }
 
+        public ActionResult GetAllContent(string searchValue)
+        {
+            var values = contentManager.GetContentList(searchValue);
+            
+            return View(values);
+        }
         public ActionResult GetContentByHeading(int id)
         {
             var contentValues = contentManager.GetContentByHeadingId(id);
